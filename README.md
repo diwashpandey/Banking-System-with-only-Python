@@ -1,19 +1,24 @@
-# full banking system with database with only python
+# Comprehensive Banking System with Python and Database
 
+This is a fully functional banking system equipped with a robust database, all developed exclusively in Python. The system ensures the organized storage of account data, capturing every user action in a detailed history.
 
-This bank's system is fully operational and includes a managed database.
-This allows for the structured storing of account data.
-Every action that a person takes is saved by this in the history.
+## How to Launch and Run
 
-All of the code for this system is written in only Python.
-The database has not made use of any external modules or libraries.
-I have only used the OS module and the file handling system for the database.
-<br>
-<br>
+1. Open the command prompt (CMD) in the directory where you've stored this file.
+2. Run `banking_system.py` using CMD.
 
+Now, you're all set to explore the powerful functionalities of this banking system.
 
-<h2>How can I open and run this file?</h2>
-- Launch CMD in the dictionary where you've saved this file.<br>
-- run banking_system.py using CMD.
+## File Descriptions
 
-<h2>Enjoy!!</h2>
+- **bank.py**: Contains all the essential code for the entire banking system.
+
+## Features
+
+- Deposit and withdraw money seamlessly.
+- Effortlessly create new accounts.
+- Securely delete accounts when needed.
+- Transfer money hassle-free.
+- Comprehensive banking operations at your fingertips.
+
+Experience the convenience and power of a complete banking system, all crafted in Python. Enjoy the functionalities and explore the endless possibilities!
