@@ -5,6 +5,7 @@ import datetime
 import os
 import sys
 import time
+import encryption
 
 DATABASE_PATH = "Accounts_Database"
 
@@ -22,7 +23,7 @@ class History_Database:
 
 
 class Accounts_Database:
-    def add_acc(self, name, pin, balance=0):
+    def add_acc(self, pin, name, balance=0):
         print("Creating your account...")
         fake_load()
         if not os.path.exists(DATABASE_PATH):
@@ -30,8 +31,9 @@ class Accounts_Database:
 
         acc_no = 100000 + len(os.listdir(f"{DATABASE_PATH}/"))
         os.makedirs(f"{DATABASE_PATH}/{acc_no}")
+        encryptedKey = encryption.encrypt1(pin)
 
-        assemble(acc_no, name, pin, balance)
+        assemble(acc_no, name, encryptedKey, balance)
 
         with open(f"{DATABASE_PATH}/{acc_no}/{acc_no}-History.txt", "a"):
             pass  # Just to create the file
@@ -81,7 +83,10 @@ class Security:
         clr_screen()
         print("Checking PIN...")
         fake_load()
-        if given_pin == pin:
+
+        encryptedKey = encryption.encrypt1(pin)
+
+        if encryptedKey == pin:
             print("PIN Matched...✅")
             return True
         else:
@@ -347,16 +352,19 @@ def error():
 global user_choice, run
 run = True
 
-if __name__ == "__main__":
-    if sys.platform == 'win32':
-        os.system('chcp 65001')
-        clr_screen()
+# if __name__ == "__main__":
+#     if sys.platform == 'win32':
+#         os.system('chcp 65001')
+#         clr_screen()
 
-    system = System()
-    try:
-        while run:
-            welcome()
-    except:
-        clr_screen()
-        error()
-        welcome()
+#     system = System()
+#     try:
+#         while run:
+#             welcome()
+#     except:
+#         clr_screen()
+#         error()
+#         welcome()
+
+system = System()
+welcome()
