@@ -23,16 +23,17 @@ class History_Database:
 
 
 class Accounts_Database:
-    def add_acc(self, pin, name, balance=0):
+    def add_acc(self, name, pin, balance=0):
         print("Creating your account...")
         fake_load()
         if not os.path.exists(DATABASE_PATH):
             os.makedirs(f"{DATABASE_PATH}")
 
-        acc_no = 100000 + len(os.listdir(f"{DATABASE_PATH}/"))
-        os.makedirs(f"{DATABASE_PATH}/{acc_no}")
         encryptedKey = encryption.encrypt1(pin)
 
+        acc_no = 100000 + len(os.listdir(f"{DATABASE_PATH}/"))
+        os.makedirs(f"{DATABASE_PATH}/{acc_no}")
+        
         assemble(acc_no, name, encryptedKey, balance)
 
         with open(f"{DATABASE_PATH}/{acc_no}/{acc_no}-History.txt", "a"):
@@ -80,11 +81,11 @@ class Security:
 
     def correct_pin(self, acc_no, given_pin):
         acc_no, name, pin, balance, active = deassemble(acc_no)
+        encryptedKey = encryption.encrypt1(given_pin)
         clr_screen()
         print("Checking PIN...")
         fake_load()
 
-        encryptedKey = encryption.encrypt1(pin)
 
         if encryptedKey == pin:
             print("PIN Matched...✅")
@@ -102,9 +103,6 @@ class System(History_Database, Accounts_Database, Security):
         fake_load()
         check_balance(given_amount, balance)
         if check_balance:
-            print("Transaction Unsuccessful.❌ You don't have enough balance!!!")
-            wait()
-        else:
             new_balance = balance - given_amount
             assemble(acc_no, name, pin, balance=new_balance)
             record = f"{get_time()} withdraw rs{given_amount}"
@@ -113,6 +111,9 @@ class System(History_Database, Accounts_Database, Security):
             print(f"rs{given_amount} successfully withdraw from the account!!!")
             print(f"Your new balance is: {new_balance}")
             wait()
+        else:
+            print("Transaction Unsuccessful.❌ You don't have enough balance!!!")
+            wait()
 
     def deposit(self, acc_no, given_amount):
         acc_no, name, pin, balance, active = deassemble(acc_no)
@@ -120,7 +121,7 @@ class System(History_Database, Accounts_Database, Security):
         fake_load()
 
         new_balance = given_amount + balance
-
+        print("the pin is"+pin)
         assemble(acc_no, name, pin, new_balance)
 
         record = f"{get_time()} Deposited Rs,{given_amount}"
@@ -296,7 +297,7 @@ def deassemble(acc_no):
         line = file.readline()
         parts = line.strip().split(':')
 
-        return int(parts[0]), parts[1], int(parts[2]), int(parts[3]), parts[4]
+        return int(parts[0]), parts[1], parts[2], int(parts[3]), parts[4]
 
 
 def get_time():
@@ -305,12 +306,14 @@ def get_time():
 
 
 def assemble(acc_no, name, pin, balance, active=True):
+
     with open(f"{DATABASE_PATH}/{acc_no}/{acc_no}-Details.txt", "w") as file:
         file.write(details_format(acc_no, name, pin, balance, active))
     clr_screen()
 
 
 def check_balance(given_amount, balance):
+    print("checking balance")
     if given_amount > balance:
         return False
     elif given_amount <= balance:

@@ -32,7 +32,6 @@ def encrypt2(num):
         case "0":
             return "abgdfhd47dl"
 
-
 def encrypt1(code):
     strCode = str(code)
     code = []
@@ -48,4 +47,6 @@ def encrypt1(code):
         generatedCode = generatedCode + items
     
     return encryption3(generatedCode)
-    
+
+code = encrypt1(365)
+print(code)
