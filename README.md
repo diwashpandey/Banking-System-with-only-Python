@@ -1,4 +1,5 @@
-# Comprehensive Banking System with Python and Database
+#  Banking-System-with-only-Python
+
 
 This is a fully functional banking system equipped with a robust database, all developed exclusively in Python. The system ensures the organized storage of account data, capturing every user action in a detailed history.
 
